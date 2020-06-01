@@ -23,7 +23,7 @@ class GoodsController extends AdminBaseController
    	//商品列表
     public function index()
     {
-        $param = $this->request->param();
+        $param = $this->request->param();  
 
         $type=$this->request->param('category',0,'intval');
         $keyword=$this->request->param('keyword','');
@@ -44,7 +44,21 @@ class GoodsController extends AdminBaseController
             }
         }
         $goodsModel=db('goods');
-    	$list=$goodsModel->where($where)->order('id DESC')->paginate(50,false,['query'=>$param]);
+    	$list=$goodsModel->where($where)->order('id DESC')->paginate(50,false,['query'=>$param])->each(function($item,$key){
+            $isset_parts=db('goods_parts')->where('goods_id',$item['id'])->count();
+            if($isset_parts){
+                $item['parts'] = 1;
+            }else{
+                $item['parts'] = 0;
+            }
+            $isset_service=db('goods_service')->where('goods_id',$item['id'])->count();
+            if($isset_service){
+                $item['service'] = 1;
+            }else{
+                $item['service'] = 0;
+            }
+            return $item;
+        });
 
         // var_dump($goodsModel->getLastSql());
 		$page=$list->render();
