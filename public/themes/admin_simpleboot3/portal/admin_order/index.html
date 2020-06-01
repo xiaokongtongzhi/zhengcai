@@ -1,0 +1,116 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">借阅订单</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('AdminOrder/index')}">
+        借阅时间:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+               value="{$start_time|default=''}"
+               style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time"
+               value="{$end_time|default=''}"
+               style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        借阅单号:
+        <input type="text" class="form-control" name="trace_no" style="width: 200px;"
+               value="{$trace_no|default=''}" placeholder="请输入订单号...">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('AdminOrder/index')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <!-- <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminOrder/delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div> -->
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="50">ID</th>
+                <th>借阅人</th>
+                <th>电话</th>
+                <th>头像</th>
+                <th>借阅单号</th>
+                <th>收货地址</th>
+                <th>商品价格</th>
+                <th>运费价格</th>
+                <th>订单总价</th>
+                 <th>是否自提</th>
+                <th>订单状态</th>
+                <th>借书数量</th>
+                <th>查看明细</th>
+                <th>下单时间</th>
+                <th>支付时间</th>
+                <th width="60">操作</th>
+            </tr>
+            </thead>
+             <php>$zi=array('0'=>'否','1'=>'自提');</php>
+            <foreach name="articles" item="vo">
+                <tr>
+                    <td><b>{$vo.id}</b></td>
+                    <td>{$vo['user_nickname']|default=''}</td>
+                    <td>{$vo['user_login']|default=''}</td>
+                    <td>
+                    <notempty name="vo['avatar']">
+                    <img width="25" height="25" src="{:cmf_get_image_preview_url($vo.avatar)}"/>
+                    </notempty>
+                    </td>
+                    <td>{$vo['trace_no']|default=''}</td>
+                    <td>{$vo['addr_name']|default=''}{$vo['full_address']|default=''}</td>
+                    <td>{$vo['order_price']|default='0'}</td>
+                    <td>{$vo['deliver_price']|default='0'}</td>
+                    <td>{$vo['total_price']|default='0'}</td>
+                     <td>{$zi[$vo['is_zi']]}</td>
+                    <td>{$vo['order_status']|andy_get_order_status=###|default=''}</td>
+                    <td>{$vo['order_num']|default='0'}</td>
+                    <td>
+                    <notempty name="vo['cart_ids']">
+                    <a href="{:url('AdminOrder/book',array('id'=>$vo['id']))}">查看明细</a>
+                    </notempty>
+                    </td>
+                    <td>{$vo['create_time']|date="Y-m-d H:i:s",###|default=''}</td>
+                    <td>
+                    <empty name="vo['pay_time']">
+                    未支付
+                    <else/>
+                    {$vo['pay_time']|date="Y-m-d H:i:s",###|default=''}
+                    </empty>
+                    </td>
+                    <td>
+                    <empty name="vo['pay_time']">
+                    未支付
+                    <else/>
+                    	<empty name="vo['is_ship']">
+	                    	<!-- <a href="{:url('AdminOrder/ship',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn"
+	                                   data-msg="是否确定发货?">发货</a> -->
+	                        <a href="{:url('AdminOrder/ship',array('id'=>$vo['id']))}">发货</a>
+	                    <else/>
+	                    已发货
+	                    </empty>
+                    </empty>
+                    </td>
+                </tr>
+            </foreach>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+
+    $(function () {
+        setCookie("refersh_time", 0);
+        Wind.use('ajaxForm', 'artDialog', 'iframeTools', function () {
+            
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="javascript:;" onclick="history.go(-1)">订单列表</a></li>
+			<li class="active"><a >订单详情</a></li>
+		</ul>
+		<php>$status = array('0'=>'待确认','1'=>'待送货','2'=>'待收货','3'=>'待开票','4'=>'待收款','5'=>'已完成','10'=>'已拒绝','11'=>'已取消');</php>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('order/wuliupost')}">
+			<table class="table table-hover table-bordered table-list" style="margin-top:20px;">
+			  	<tr>
+				   <td><b>送货城市</b></td><td>{$data.deliverycity}</td>
+				   <td><b>送货区/县</b></td><td>{$data.deliverycounty}</td>
+				   <td><b>送货地址</b></td><td>{$data.shdd}</td>
+				   <td><b>订单编号</b></td><td>{$data.ddbh}</td>
+				 </tr>
+			  	<tr>
+			   		<td><b>采购人名称</b></td><td>{$data.cgrmc}</td>
+			   		<td><b>需方联系人</b></td><td>{$data.xflxrxm}</td>
+			   		<td><b>需方电话</b></td><td>{$data.xfdh}</td>
+			   		<td><b>电商名称</b></td><td><if condition="!empty($data['ghsmc'])">{$data.ghsmc}</if></td>
+			  	</tr>
+			  	<tr>
+			   		<td><b>订单金额</b></td>
+			   		<td>
+			   			<if condition="!empty($data['ddze'])">{$data.ddze}</if>
+			   		</td>
+			   		<td><b>订单提交时间</b></td>
+			   		<td>
+			   			<if condition="!empty($data['cjrq'])">{$data.cjrq}</if>
+			   		</td>
+			   		<td><b>订单状态</b></td>
+			   		<td>{$status[$info.status]}
+					</td>
+			   		<td><b>支付方式</b></td>
+			   		<td>
+			   			<if condition="!empty($data['zffs'])">
+						<if condition="$data.zffs eq 70080001">现金</if>
+						<if condition="$data.zffs eq 70080002">公务卡结算</if>
+				   		<if condition="$data.zffs eq 70080003">银行转账</if>
+				   		<if condition="$data.zffs eq 70080004">银行支票</if>
+							
+							</if>
+						</div>
+			   		</td>
+			  	</tr>
+
+			  	<tr>
+			   		<td><b>发票抬头</b></td>
+			   		<td>
+			   			<if condition="!empty($data['fptt'])">
+						{$data.fptt}
+						</if>
+			   		</td>
+			   		<td><b>发票内容</b></td>
+			   		<td>
+			   			<if condition="!empty($data['fpnr'])">
+						<if condition="$data.fpnr eq 70100001">商品明细</if>
+						<if condition="$data.fpnr eq 70100002">办公耗材</if>
+				   		<if condition="$data.fpnr eq 70100003">办公用品</if>	
+						</if>
+			   		</td>
+			   		<td><b>纳税人识别号</b></td>
+			   		<td>
+				   		<if condition="!empty($data['nsrsbh'])">
+							{$data.nsrsbh}
+						</if>
+					</td>
+			   		<td><b>是否需要安装服务</b></td>
+			   		<td>
+			   			<if condition="!empty($data['sfxyazfw'])">
+						<if condition="$data.sfxyazfw eq 0">需要安装服务</if>
+						<if condition="$data.sfxyazfw eq 1">不需要安装服务</if>
+						</if>
+			   		</td>
+			  	</tr>
+			  	<tr>
+			   		<td><b>订单备注说明</b></td>
+			   		<td>
+			   			<if condition="!empty($data['beiz'])">
+							{$data.beiz}
+						</if>
+			   		</td>
+			   		<td><b>收货时间</b></td>
+			   		<td>
+			   			<if condition="!empty($data['shsj'])">
+						<if condition="$data.shsj eq 0">工作日/周末/假日均可</if>
+						<if condition="$data.shsj eq 1">周末送货</if>
+				   		<if condition="$data.shsj eq 2">工作日送货</if>	
+						</if>
+			   		</td>
+			   		<td><b>收货期限</b></td>
+			   		<td>
+				   		<if condition="!empty($data['shqx'])">
+						<if condition="$data.shqx eq 0">不限</if>
+						<if condition="$data.shqx eq 1">一天内</if>
+				   		<if condition="$data.shqx eq 2">两天内</if>
+				   		<if condition="$data.shqx eq 3">三天内</if>
+				   		<if condition="$data.shqx eq 5">五天内</if>
+				   		<if condition="$data.shqx eq 7">七天内</if>
+
+						</if>
+					</td>
+					<td><b>政采状态</b></td>
+			   		<td><notempty name="data.zt">
+				   		<if condition="$data.zt eq 2">供应商待确认</if>
+				   		<if condition="$data.zt eq 3">待验收</if>
+				   		<if condition="$data.zt eq 4">订单已取消</if>
+				   		<if condition="$data.zt eq 5">验收通过</if>
+				   		<if condition="$data.zt eq 8">电商作废</if>
+				   		<if condition="$data.zt eq 9">采购单位确认作废</if>
+				   		</notempty>
+					</td>
+			   		
+			  	</tr>
+			</table>
+			<br/><br/>
+	
+			
+			<div class="wrap js-check-wrap">
+				<form class="js-ajax-form" action="" method="post">
+					<table class="table table-hover table-bordered table-list">
+						<thead>
+						<tr>
+							<th>型号编号</th>
+							<th>型号名称</th>
+							<th>品牌编号</th>
+							<th>品牌名称</th>
+							<th>配件信息</th>
+							<th>购买数量</th>
+							<th>商品的实际价格</th>
+							<th>小计</th>
+							<th>操作</th>
+						</tr>
+						</thead>
+						<foreach name="data.productList" item="v">
+							<tr>
+								<td>{$v.XHBH}</td>
+								<td><notempty name="v.XHMC">{$v.XHMC}</notempty></td>
+								<td>{$v.PPBH}</td>
+								<td>{$v.PPMC}</td>
+								<td>
+								<notempty name="$v.accessoryList">
+									<table class="table table-hover table-bordered table-list">
+										<thead>
+											<tr>
+												<th>配件名称</th>
+												<th>配件单价</th>
+												<th>数量</th>
+											</tr>
+										</thead>
+										<foreach name="v.accessoryList" item="vo">
+											<tr>
+												<td>{$vo.PJMC}</td>
+												<td>{$vo.PJJG}元</td>
+												<td>{$vo.SL}</td>
+											</tr>
+										</foreach>	
+									</table>
+									</notempty>
+								</td>
+								<td>{$v.SL}</td>
+								<td>{$v.SJJG}元</td>
+								<td>{$v.XJJG}元</td>
+								<td><a href="{:url('Order/shibiema',array('xhbh'=>$v.XHBH,'ddbh'=>$data.ddbh,'xhmc'=>$v.XHMC,))}">推送识别码</a>
+								<php>$count=db("biaoshima")->where(['ddbh'=>$data['ddbh'],'xhbh'=>$v['XHBH']])->count();</php>
+								已推送{$count}次
+								</td>
+							</tr>
+						</foreach>
+					</table>
+				</form>
+			</div>
+			<p>推送信息记录</p>
+			<table class="table table-hover table-bordered table-list" style="margin-top:20px;">
+			  	<tr>
+				   <td><b>物流是否拆单</b></td><td><if condition="$wuliu.sfcd==1">不拆单<else/>拆单</if></td>
+				   <td><b>分拆子订单编号</b></td><td>{$wuliu.fczddbh}</td>
+				   <td><b>快递公司</b></td><td>{$wuliu.kdgs}</td>
+				   <td><b>快递单号</b></td><td>{$wuliu.kddh}</td>
+				 </tr>
+			  	<tr>
+			   		<td><b>描述</b></td><td>{$wuliu.ms}</td>
+			   		<td><b>快递时间</b></td><td>{$wuliu.kdsj}</td>
+			   		<td><b>收货时间</b></td><td>{$qianshou.shsj}</td>
+			   		<td><b>发票开具时间</b></td><td>{$qianshou.fpkjsj}</td>
+			  	</tr>
+				<tr>
+			   		<td><b>收到发票时间</b></td><td>{$qianshou.fpsdsj}</td>
+			   		<td><b>收款标志</b></td><td><if condition="$qianshou.skbz==1">正常收款<else/>未收款</if></td>
+			   		<td><b>收款金额</b></td><td>{$qianshou.skje}</td>
+			   		<td><b>收款时间</b></td><td>{$qianshou.sksj}</td>
+			  	</tr>
+			</table>
+			<p>操作记录</p>
+			<table class="table table-hover table-bordered table-list" style="margin-top:20px;">
+			  	<tr>
+				   <td><b>栏目</b></td>
+				   <td><b>操作项</b></td>
+				   <td><b>时间</b></td>
+				 </tr>
+				 <foreach name="orderlog" item="vo">
+			  	<tr>
+					<td>{$vo.catename}</td>
+					<td>{$vo.name}</td>
+					<td>{:date('Y-m-d H:i:s',$vo['addtime'])}</td>
+			  	</tr>
+				</foreach>
+			</table>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('Merchant/index')}">客户管理</a></li>
+			<li><a href="{:url('Merchant/add')}">添加客户</a></li>
+		</ul>
+        <form class="well form-inline margin-top-20" method="get" action="{:url('Merchant/index')}">
+            用户名:
+            <input type="text" class="form-control" name="user_login" style="width: 120px;" value="{:input('request.user_login/s','')}" placeholder="请输入{:lang('USERNAME')}">
+            <input type="submit" class="btn btn-primary" value="搜索" />
+            <a class="btn btn-danger" href="{:url('Merchant/index')}">清空</a>
+        </form>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th width="50">ID</th>
+					<th>客户名称</th>
+					<th>登录账号</th>
+					<th>开始时间</th>
+					<th>到期时间</th>
+					<th>客户地区</th>
+					<th>{:lang('STATUS')}</th>
+					<th width="120">{:lang('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<php>$user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));</php>
+				<foreach name="users" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.user_nickname}</td>
+					<td>{$vo.user_login}</td>
+					<td>{:date('Y-m-d',$vo['start_time'])}</td>
+					<td>{:date('Y-m-d',$vo['end_time'])}</td>
+					<td>{$vo.province}/{$vo.city}</td>
+					<td>
+						<switch name="vo.user_status">
+							<case value="0">
+								<span class="label label-danger">{$user_statuses[$vo['user_status']]}</span>
+							</case>
+							<case value="1">
+								<span class="label label-success">{$user_statuses[$vo['user_status']]}</span>
+							</case>
+							<case value="2">
+								<span class="label label-warning">{$user_statuses[$vo['user_status']]}</span>
+							</case>
+						</switch>
+					</td>
+					<td>
+							<a class="btn btn-xs btn-primary" href='{:url("merchant/edit",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>
+							<!--<a class="btn btn-xs btn-danger js-ajax-delete" href="{:url('user/delete',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>-->
+							<if condition="$vo['user_status'] eq 1">
+								<a class="btn btn-xs btn-danger js-ajax-dialog-btn" href="{:url('merchant/ban',array('id'=>$vo['id']))}" data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
+							<else />
+								<a class="btn btn-xs btn-warning js-ajax-dialog-btn" href="{:url('merchant/cancelban',array('id'=>$vo['id']))}" data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+							</if>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+    <script>
+		//续费
+		function doPay(id,type) {
+			openIframeLayer("{:url('user/renew')}?id=" + id+"&type="+type, '小程序续费', {
+				area: ['700px', '350px'],
+				btn: ['确定', '取消'],
+				yes: function (index, layero) {
+					//do something
+					var iframeWin          = window[layero.find('iframe')[0]['name']];
+					var result = iframeWin.confirm();
+					setTimeout(function(){
+						layer.close(index);
+						location.reload();
+					}, 1000);
+				}
+			});
+		}
+    </script>
+</body>
+</html>

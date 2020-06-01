@@ -1,0 +1,23 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('order/song')}">待送货订单</a></li>
+			<li class="active"><a href="{:url('order/yanshou')}">合同</a></li>
+		</ul>
+		
+			<div class="form-group" style="margin-top:100px;">
+				<label for="input-kdgs" class="col-sm-2 control-label">合同地址<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+				<if condition="!empty($data['url'])">
+					<a href="{$data.url}" target="_blank">{$data.url}</a>
+					</if>
+				</div>
+			</div>
+			
+
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

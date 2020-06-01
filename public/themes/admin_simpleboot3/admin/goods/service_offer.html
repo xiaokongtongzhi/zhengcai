@@ -1,0 +1,40 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="70">ID</th>
+				<th>品目名称</th>
+                <th>服务名称</th>
+				<th>报价价格</th>
+                <th>报价状态</th>
+                <th>报价时间</th>
+            </tr>
+            </thead>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td><b>{$vo.id}</b></td>
+					<td>{$vo.goods.pmmc}</td>
+                    <td>{$vo.goods.fwmc}</td>
+                    <td>{$vo.price}元</td>
+                    <td><if condition="$vo.status eq 0">报价成功</if></td>
+                    <td>{:date('Y-m-d H:i',$vo['create_time'])}</td>
+                </tr>
+            </foreach>
+        </table>
+        <div class="table-actions">
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    function reloadPage(win) {
+        win.location.reload();
+    }
+</script>
+</body>
+</html>

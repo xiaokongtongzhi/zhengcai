@@ -1,0 +1,88 @@
+<include file="public@header"/>
+<style type="text/css">
+    .form-group .control-label{
+        padding-top: 0;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <form action="{:url('goods/parts_quote_post')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <input type="hidden" name="id" value="{$info.id}">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="input-site-name" class="col-sm-2 control-label">品目编号</label>
+                    <div class="col-md-6 col-sm-10">
+                        {$info.pmbh}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input-site-name" class="col-sm-2 control-label">品目名称</label>
+                    <div class="col-md-6 col-sm-10">
+                        {$info.pmmc}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input-site-name" class="col-sm-2 control-label">配件编号</label>
+                    <div class="col-md-6 col-sm-10">
+                        {$info.PJBH}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input-site-name" class="col-sm-2 control-label">配件名称</label>
+                    <div class="col-md-6 col-sm-10">
+                        {$info.PJMC}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input-site-name" class="col-sm-2 control-label">配件描述</label>
+                    <div class="col-md-6 col-sm-10">
+                        {$info.PJMS}
+                    </div>
+                </div>
+                <notempty name="type">
+                    <div class="form-group">
+                        <label for="input-site-name" class="col-sm-2 control-label" style="padding-top: 10px;">报价</label>
+                        <div class="col-md-6 col-sm-10">
+                            <input type="text" name="price" value="{$info.quote_price}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-site-name" class="col-sm-2 control-label" style="padding-top: 10px;">价格上浮原因</label>
+                        <div class="col-md-6 col-sm-10">
+                            <textarea name="jgsfyy"></textarea>
+                        </div>
+                    </div>
+                </notempty>
+                配置明细
+                <php>
+                    $accessoryListmx=json_decode($info['accessoryListmx'],true);
+                </php>
+                <foreach name='accessoryListmx' item='vo'>
+                    <div class="form-group">
+                        <label for="input-site-name" class="col-sm-2 control-label">{$vo.mxms}</label>
+                        <div class="col-md-6 col-sm-10">
+                            {$vo.Pjsl}
+                        </div>
+                    </div>
+                </foreach>
+
+                
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <notempty name="type">
+                    <button class="btn btn-success js-ajax-submit" type="submit">{:lang('提交')}</button>
+                </notempty>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+
+
+</body>
+</html>

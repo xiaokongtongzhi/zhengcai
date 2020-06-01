@@ -1,0 +1,59 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('order/song')}">待送货订单</a></li>
+			<li class="active"><a href="{:url('order/wuliu')}">添加物流</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('order/wuliupost')}">
+			<input type="hidden" name="id" value="{$id}" />
+			<div class="form-group">
+				<label for="input-kdgs" class="col-sm-2 control-label">快递公司<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-kdgs" name="kdgs">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-kddh" class="col-sm-2 control-label">快递单号<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-kddh" name="kddh">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-ms" class="col-sm-2 control-label">描述<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<textarea class="form-control" name="ms" id="input-ms" ></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-kdsj" class="col-sm-2 control-label">快递时间<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control js-datetime" id="input-kdsj" name="kdsj"> 
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-sfcd" class="col-sm-2 control-label">是否拆单<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="radio"   name="sfcd" value="0"> 拆单
+					<input type="radio"   name="sfcd" value="1"> 不拆单
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-fczddbh" class="col-sm-2 control-label">子订单编号</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" placeholder="只有拆单需要输入子订单编号"  name="fczddbh" value=""> 
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>后台管理系统</title>
+		<meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<meta name="robots" content="noindex,nofollow">
+		<link rel="stylesheet" href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/style.css" />
+		
+		<script>
+        if (window.parent !== window.self) {
+            document.write              = '';
+            window.parent.location.href = window.self.location.href;
+            setTimeout(function () {
+                document.body.innerHTML = '';
+            }, 0);
+        }
+    </script>
+	</head>
+	<body>
+		
+		<div class="log-m-bg">
+			<div class="log-m">
+				<form name="login" action="{:url('public/doLogin')}" method="post" class="js-ajax-form">
+					<div class="logo"><img src="__TMPL__/public/assets/themes/images/log-logo.png" alt="logo"/></div>
+					<div class="log-bd">
+						<div class="log-col userna">
+						<input class="input" id="input_username" name="username" type="text" placeholder="{:lang('USERNAME_OR_EMAIL')}" title="{:lang('USERNAME_OR_EMAIL')}" value="{:cookie('admin_username')}" data-rule-required="true" data-msg-required=""/>
+						</div>
+						<div class="log-col paswd">
+							<input type="password" id="input_password" class="form-control input" name="password" placeholder="{:lang('PASSWORD')}" title="{:lang('PASSWORD')}" data-rule-required="true" data-msg-required="">
+						</div>
+						<div class="log-col2 verifycode-wrapper">
+							<input type="text" name="captcha" placeholder="验证码" class="form-control captcha input">
+							<span class="log-span"><captcha height="32" width="150" font-size="18" style=""/></span>
+						</div>
+						
+						<div class="log-btn" id="login_btn_wraper">
+							<input type="hidden" name="redirect" value="">
+							<button class="btn btn-primary btn-block js-ajax-submit" type="submit" style="margin-left: 0px"
+                                data-loadingmsg="{:lang('LOADING')}">
+                            {:lang('LOGIN')}
+                        </button>
+						</div>
+					</div>
+				</form>				
+			</div>
+		</div>
+		
+		
+		<script type="text/javascript">
+		    //全局变量
+		    var GV = {
+		        ROOT: "__ROOT__/",
+		        WEB_ROOT: "__WEB_ROOT__/",
+		        JS_ROOT: "static/js/",
+		        APP: ''/*当前应用名*/
+		    };
+		</script>
+		<script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+		<script src="__STATIC__/js/wind.js"></script>
+		<script src="__STATIC__/js/admin.js"></script>
+		<script>
+		    (function () {
+		        document.getElementById('input_username').focus();
+		    })();
+		</script>
+	</body>
+</html>

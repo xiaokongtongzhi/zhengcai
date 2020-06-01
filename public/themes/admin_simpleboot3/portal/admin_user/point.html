@@ -1,0 +1,53 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">明细</a></li>
+    </ul>
+    
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="50">ID</th>
+                <th>用户账号</th>
+                <th>用户昵称</th>
+                <th>类型</th>
+                <th>金额</th>
+            </tr>
+            </thead>
+            <foreach name="articles" item="vo">
+                <tr>
+                    <td><b>{$vo['id']}</b></td>
+                    <td>{$vo['user_login']|default=''}</td>
+                    <td>{$vo['user_nickname']|default=''}</td>
+                    <td>{$vo['pt_name']|default=''}</td>
+                    <td>
+                    <eq name="vo['pt_flag']" value="1">
+                    +{$vo['pt_money']|default='0'}
+                    <else/>
+                    -{$vo['pt_money']|default='0'}
+                    </eq>
+                    </td>
+                </tr>
+            </foreach>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    function reloadPage(win) {
+        win.location.reload();
+    }
+
+    $(function () {
+        setCookie("refersh_time", 0);
+        Wind.use('ajaxForm', 'artDialog', 'iframeTools', function () {
+            
+        });
+    });
+</script>
+</body>
+</html>

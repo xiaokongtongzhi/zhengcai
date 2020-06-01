@@ -1,0 +1,72 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">商品获取</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('Goods/goods_get_post')}">
+        
+        开始时间:
+        <input type="date" class="form-control" id="starttime" name="starttime" style="width: 200px;"
+               value="{$starttime|default=''}">
+	    结束时间:
+        <input type="text" class="form-control" id="endtime" name="endtime" style="width: 200px;"
+               value="{$endtime|default=''}" disabled>
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('Goods/goods_get')}">清空</a>
+    </form>
+	<form class="well form-inline margin-top-20" method="post" action="{:url('Goods/goods_getdetail_post')}">
+        
+        商品型号编号:
+        <input type="text" class="form-control" id="xhbh" name="xhbh" style="width: 200px;"
+               value="{$xhbh|default=''}">
+	   
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('Goods/goods_get')}">清空</a>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+
+    $("#starttime").bind('input propertychange',function(){
+				var val=$(this).val();
+				var oldTime = (new Date(val)).getTime(); //得到毫秒数
+				var newmite= oldTime+86400000;//86400000是1天
+				var endTime=$("#endtime").val();
+				var newTime3 = new Date(newmite);//参数是毫秒类型 可以不带参数 就是获取当前时间  传参数就是把毫秒装换成时间类型  
+				var aa=gshtime(newTime3);
+				var date= new Date(Date.parse(aa.replace(/-/g,  "/")));  
+				$("#endtime").val(formatDate(date));
+			});
+			function formatDate(date){  
+			    var y = date.getFullYear();  
+			    var m = date.getMonth() + 1;  
+			    m = m < 10 ? '0' + m : m;  
+			    var d = date.getDate();  
+			    d = d < 10 ? ('0' + d) : d;  
+			    return y + '-' + m + '-' + d;  
+			};  
+			function gshtime(time)  
+		      {   
+		          var year = time.getFullYear();
+		          var month = time.getMonth() + 1;    
+		          var day = time.getDate();         
+		          var hh = time.getHours();       
+		          var mm = time.getMinutes();    
+		          var str= year + "-";  
+		          if(month < 10)  
+		             str+= "0";  
+		          str+= month + "-";  
+		          if(day < 10)  
+		              str+= "0";  
+		          str+= day + " ";  
+		          return(str);   
+		      }  
+</script>
+</body>
+</html>

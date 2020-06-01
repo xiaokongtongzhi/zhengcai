@@ -1,0 +1,52 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group" >
+                <label for="input-name">续费时间</label>
+                <div onchange="updateExpireTimeTotal(this)">
+                    <input type="radio"  name="alias" value="1" checked data-price="{$site_info.one_year_money |default=0}">一年
+                    <input type="radio"  name="alias" value="2" data-price="{$site_info.two_year_money |default=0}">两年
+                    <input type="radio"  name="alias" value="3" data-price="{$site_info.three_year_money |default=0}">三年
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-name">续费金额</label>
+                <div>
+                    <span id="update_total_money">￥{$site_info.one_year_money |default=0}</span>
+                </div>
+            </div>
+<!--            <input type="hidden" id="current_base_price" value="5000"/>-->
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript" src="__STATIC__/js/layer/layer.js"></script>
+<script>
+    function updateExpireTimeTotal() {
+        var total_money = 0;
+        total_money = $('input[name="alias"]:checked').attr('data-price');
+
+        $('#update_total_money').html('￥'+total_money);
+    }
+
+    function confirm() {
+        var money = $('input[name="alias"]:checked').attr('data-price');
+        var num = $('input[name="alias"]:checked').val();
+        var id = {$id};
+        var type = {$type};
+        if(money == '' || money<1){
+            layer.msg('金额不得小于1');
+        }else{
+            $.post("{:cmf_url('user/renewPost')}",{uid:id,type:type,money:money,num:num},function(data){
+                //console.log(data);
+                layer.msg(data.msg);
+            });
+        }
+
+    }
+</script>
+</body>
+</html>

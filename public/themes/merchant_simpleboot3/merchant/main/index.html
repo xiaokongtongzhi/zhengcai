@@ -1,0 +1,452 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/newindex.css"/>
+	<script src="__TMPL__/public/assets/js/jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__TMPL__/public/assets/js/echarts.min.js" type="text/javascript" charset="UTF-8"></script>
+</head>
+<body class="indexbg">
+<div class="wrap index-wrap">
+		<!--订单-->
+		<div class="row">
+        	<div class="col-sm-3">
+        		<div class="rowbox">
+        			<div class="rowbox-tit clearfix">
+        				<h5 class="fl">订单</h5>
+        				<span class="label label-danger fr">等待</span>
+        			</div>
+        			<div class="rowbox-cont">
+        				<a href="javascript:void(0);">
+        					<p class="num">{$order['daiqueren']}</p>
+        					<p class="status">待确认</p>
+        				</a>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="col-sm-3">
+        		<div class="rowbox">
+        			<div class="rowbox-tit clearfix">
+        				<h5 class="fl">订单</h5>
+        				<span class="label label-danger fr">等待</span>
+        			</div>
+        			<div class="rowbox-cont">
+        				<a href="javascript:void(0);">
+        					<p class="num">{$order['daishouhuo']}</p>
+        					<p class="status">待收货</p>
+        				</a>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="col-sm-3">
+        		<div class="rowbox">
+        			<div class="rowbox-tit clearfix">
+        				<h5 class="fl">订单</h5>
+        				<span class="label label-danger fr">等待</span>
+        			</div>
+        			<div class="rowbox-cont">
+        				<a href="javascript:void(0);">
+        					<p class="num">{$order['daikaipiao']}</p>
+        					<p class="status">待开票</p>
+        				</a>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="col-sm-3">
+        		<div class="rowbox">
+        			<div class="rowbox-tit clearfix">
+        				<h5 class="fl">订单</h5>
+        				<span class="label label-info fr">完结</span>
+        			</div>
+        			<div class="rowbox-cont">
+        				<a href="javascript:void(0);">
+        					<p class="num">{$order['yiwancheng']}</p>
+        					<p class="status">已完成</p>
+        				</a>
+        			</div>
+        		</div>
+        	</div>
+		</div>
+		<!--商品-->
+		<div class="row">
+        	<div class="col-sm-3">
+        		<div class="rowbox">
+        			<div class="rowbox-tit clearfix">
+        				<h5 class="fl">商品</h5>
+        				<span class="label label-info fr">累计</span>
+        			</div>
+        			<div class="rowbox-cont">
+        				<a href="javascript:void(0);">
+        					<p class="num">{$goods['yibaojia']}</p>
+        					<p class="status">已报价</p>
+        				</a>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="col-sm-3">
+        		<div class="rowbox">
+        			<div class="rowbox-tit clearfix">
+        				<h5 class="fl">商品</h5>
+        				<span class="label label-info fr">累计</span>
+        			</div>
+        			<div class="rowbox-cont">
+        				<a href="javascript:void(0);">
+        					<p class="num">{$goods['cexiao']}</p>
+        					<p class="status">撤销报价</p>
+        				</a>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="col-sm-3">
+        		<div class="rowbox">
+        			<div class="rowbox-tit clearfix">
+        				<h5 class="fl">商品</h5>
+        				<span class="label label-info fr">累计</span>
+        			</div>
+        			<div class="rowbox-cont">
+        				<a href="javascript:void(0);">
+        					<p class="num">{$goods['weibaojia']}</p>
+        					<p class="status">未报价</p>
+        				</a>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="col-sm-3">
+        		<div class="rowbox">
+        			<div class="rowbox-tit clearfix">
+        				<h5 class="fl">商品</h5>
+        				<span class="label label-info fr">累计</span>
+        			</div>
+        			<div class="rowbox-cont">
+        				<a href="javascript:void(0);">
+        					<p class="num">{$goods['total']}</p>
+        					<p class="status">商品总数</p>
+        				</a>
+        			</div>
+        		</div>
+        	</div>
+		</div>
+		
+		<!--交易图表-->
+		<div class="row">
+			<div class="col-sm-12">
+        		<div class="rowbox">
+        			<div class="rowbox-tit clearfix">
+        				<h5 class="fl">交易图表</h5>
+        				<div class="btn-group fr">
+        					<button type="button" class="btn btn-xs btn-white active">近30天</button> 
+        					<!--<button type="button" class="btn btn-xs btn-white">周</button> 
+        					<button type="button" class="btn btn-xs btn-white">月</button> 
+        					<button type="button" class="btn btn-xs btn-white">年</button>-->
+        				</div>
+        			</div>
+        			<div class="rowbox-cont">
+        				
+        				<div class="indexChart" id="indexChart"></div>
+        				
+        			</div>
+        		</div>
+        	</div>
+		</div>
+		
+		<!--商品销量排行/累计订单金额-->
+		<div class="row">
+			<div class="col-sm-7">
+        		<div class="rowbox">
+        			<div class="rowbox-tit clearfix">
+        				<h5 class="fl">商品销量排行</h5>
+        			</div>
+        			<div class="rowbox-cont" style="min-height:525px;">
+        				<div class="sales-top">
+        					商品销售总计：<span class="colorblue">{$tongji['yisure']}</span> 件
+        					共计 <span class="colororange">{$tongji['yisuremoney']}</span> 元
+        				</div>
+        				<ul class="sales-list">
+						<foreach name="new" key="k" id="v">
+        					<li>
+        						<p class="proname">{$k}</p>
+        						<div class="clearfix">
+        							<div class="barbox fl"><span class="barbox-inner" style="width:31.78%;"></span></div>
+        							<span class="barnum fl">{$v}</span>
+        						</div>
+        					</li>
+        				</foreach>	
+        				</ul>
+        				
+        			</div>
+        		</div>
+        	</div>
+			<div class="col-sm-5">
+        		<div class="rowbox">
+        			<div class="rowbox-tit clearfix">
+        				<h5 class="fl">累计订单总数/金额</h5>
+        			</div>
+        			<div class="rowbox-cont" style="min-height:525px;">
+        				
+        				<div class="leiji-wrap">
+        					<ul class="sales-list">
+        						<li>
+	        						<p class="proname">上个30天订单总数</p>
+	        						<p class="maxnum">{$tongji.premonth_yisure}</p>
+	        					</li>
+	        					<li>
+	        						<p class="proname">最近30天订单总数</p>
+	        						<p class="maxnum">{$tongji.daymonth_yisure}</p>
+	        						<div class="clearfix">
+	        							<div class="barbox fl"><span class="barbox-inner" style="width:12.88%;background:#0092dc;"></span></div>
+	        							<span class="barnum colorgreen fl">12.88% ↑</span>
+	        						</div>
+	        					</li>
+	        					<li style="height:5px;"></li>
+	        					<li>
+	        						<p class="proname">上个30天销售总额</p>
+	        						<p class="maxnum">{$tongji.premonth_yisuremoney}</p>
+	        					</li>
+	        					<li>
+	        						<p class="proname">近30天销售总额</p>
+	        						<p class="maxnum">{$tongji.daymonth_yisuremoney}</p>
+	        						<div class="clearfix">
+	        							<div class="barbox fl"><span class="barbox-inner" style="width:92.12%;background:#0092dc;"></span></div>
+	        							<!-- <span class="barnum colorred fl">92.12% ↓</span> -->
+	        						</div>
+	        					</li>
+        					</ul>
+        				</div>
+        				
+        			</div>
+        		</div>
+        	</div>
+		</div>
+		<!--商品销量排行/累计订单金额-end-->
+		
+	</div>
+	
+
+<script>
+$(function(){
+    var dom = document.getElementById("indexChart");
+	var myChart = echarts.init(dom);
+	var app = {};
+    option = null;
+	var turiqi='{$turiqi}';
+	turiqi=JSON.parse(turiqi);
+	var tunum='{$tunum}';
+	tunum=JSON.parse(tunum);
+	var tumoney='{$tumoney}';
+	tumoney=JSON.parse(tumoney);
+	var posList = [
+	    'left', 'right', 'top', 'bottom',
+	    'inside',
+	    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+	    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+	];
+	
+	app.configParameters = {
+	    rotate: {
+	        min: -90,
+	        max: 90
+	    },
+	    align: {
+	        options: {
+	            left: 'left',
+	            center: 'center',
+	            right: 'right'
+	        }
+	    },
+	    verticalAlign: {
+	        options: {
+	            top: 'top',
+	            middle: 'middle',
+	            bottom: 'bottom'
+	        }
+	    },
+	    position: {
+	        options: echarts.util.reduce(posList, function (map, pos) {
+	            map[pos] = pos;
+	            return map;
+	        }, {})
+	    },
+	    distance: {
+	        min: 0,
+	        max: 100
+	    }
+	};
+	
+	app.config = {
+	    rotate: 90,
+	    align: 'left',
+	    verticalAlign: 'middle',
+	    position: 'insideBottom',
+	    distance: 15,
+	    onChange: function () {
+	        var labelOption = {
+	            normal: {
+	                rotate: app.config.rotate,
+	                align: app.config.align,
+	                verticalAlign: app.config.verticalAlign,
+	                position: app.config.position,
+	                distance: app.config.distance
+	            }
+	        };
+	        myChart.setOption({
+	            series: [{
+	                label: labelOption
+	            }, {
+	                label: labelOption
+	            }, {
+	                label: labelOption
+	            }, {
+	                label: labelOption
+	            }]
+	        });
+	    }
+	};
+	
+	
+	var labelOption = {
+	    show: true,
+	    position: app.config.position,
+	    distance: app.config.distance,
+	    align: app.config.align,
+	    verticalAlign: app.config.verticalAlign,
+	    rotate: app.config.rotate,
+	    formatter: '{c}  {name|{a}}',
+	    fontSize: 16,
+	    rich: {
+	        name: {
+	            textBorderColor: '#fff'
+	        }
+	    }
+	};
+	
+	option = {
+	    color: ['#2ec7c9', '#b6a2de'],
+	    tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+	    legend: {
+	        data: ['订单金额', '订单数']
+	    },
+	    toolbox: {
+	        show: true,
+	        orient: 'horizontal',
+	        feature: {
+	            mark: {show: true},
+	            dataView: {show: true, readOnly: false},
+	            magicType: {show: true, type: ['line', 'bar', 'tiled']},
+	            restore: {show: true},
+	            saveAsImage: {show: true}
+	        },
+	        iconStyle:{
+                borderColor: '#2ec7c9'
+            },
+            emphasis:{
+                iconStyle:{
+                    borderColor:"#259d9f"
+                }
+            },
+	    },
+	    grid: {
+            x: 50,
+            x2: 30,
+            y: 60,
+            y2: 50
+        },
+	    xAxis: [
+	        {
+	            type: 'category',
+	            axisTick: {show: false},
+	            data: turiqi,
+	            axisPointer: {
+                    type: 'shadow'
+                },
+                axisLabel: {
+                    interval: 0,
+                    rotate:40,
+                    color: '#333',
+                },
+                axisLine: {
+                	lineStyle: {
+                		color: '#008acd',
+                	}
+                },
+	        }
+	    ],
+	    yAxis: [
+	        {
+	            type: 'value',
+	            axisLabel: {
+                    color: '#333',
+                },
+	            axisLine: {       //y轴
+			        show: false,
+			        lineStyle: {
+                		color: '#008acd',
+                	}
+			    },
+			    axisTick: {       //y轴刻度线
+		        	show: false
+		        },
+		        splitLine: {
+	            	lineStyle:{
+	                	color: ['#e7eaec']
+	            	}
+	            },
+	        }
+	    ],
+	    series: [
+	        {
+	            name: '订单金额',
+	            type: 'bar',
+	            barGap: 0,
+//	            barWidth: '50%',
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#2ec7c9',
+                                fontSize: 12
+                            }
+                        }
+                    }
+                },
+	            data: tumoney
+	        },
+	        {
+	            name: '订单数',
+	            type: 'bar',
+//	            barWidth: '50%',
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true, //开启显示
+                            position: 'top', //在上方显示
+                            textStyle: { //数值样式
+                                color: '#b6a2de',
+                                fontSize: 12
+                            }
+                        }
+                    }
+                },
+	            data:tunum
+	        }
+	    ]
+	};
+	
+	// 使用刚指定的配置项和数据显示图表。
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+	
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('order/daishoukuan')}">待收款订单</a></li>
+			<li class="active"><a href="{:url('order/shoukuandetail')}">收款情况</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('order/shoukuandetailpost')}">
+			<input type="hidden" name="id" value="{$id}" />
+			<div class="form-group">
+				<label for="input-skbz" class="col-sm-2 control-label">收款标志<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="radio"   name="skbz" value="2"> 未收款
+					<input type="radio"   name="skbz" value="1"> 正常收款
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-skje" class="col-sm-2 control-label">收款金额<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-skje" name="skje">
+				</div>
+			</div>
+		<div class="form-group">
+				<label for="input-skje" class="col-sm-2 control-label">备注<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-bz" name="bz">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-sksj" class="col-sm-2 control-label">收款时间<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control js-datetime" id="input-sksj" name="sksj"> 
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

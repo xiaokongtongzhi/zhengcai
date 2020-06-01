@@ -1,0 +1,96 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<!-- <li><a href="javascript:;" onclick="history.go(-1)"></a></li> -->
+			<li class="active"><a >商品型号信息以及相关报价</a></li>
+		</ul>
+		<php>$status = array('0'=>'待确认','1'=>'待送货','2'=>'待收货','3'=>'待开票','4'=>'待收款','5'=>'已完成','10'=>'已拒绝','11'=>'已取消');</php>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('order/wuliupost')}">
+			<table class="table table-hover table-bordered table-list" style="margin-top:20px;">
+			  	<tr>
+				   <td><b>型号编号</b></td><td>{$result.xhbh}</td>
+				   <td><b>型号名称</b></td><td>{$result.xhmc}</td>
+				   <td><b>品目编号</b></td><td>{$result.pmbh}</td>
+				   <td><b>品目名称</b></td><td>{$result.pmmc}</td>
+				 </tr>
+			  	<tr>
+			   		<td><b>品牌编号</b></td><td>{$result.ppbh}</td>
+			   		<td><b>品牌名称</b></td><td>{$result.ppmc}</td>
+			   		<td><b>类别编号</b></td><td>{$result.lbbh}</td>
+			   		<td><b>类别名称</b></td><td>{$result.lbmc}</td>
+			  	</tr>
+			  	<tr>
+			   		<td><b>我的报价</b></td>
+			   		<td>
+			   			<if condition="!empty($result['price'])">{$result.price}</if>
+			   		</td>
+			   		<td><b>电商商品状态</b></td>
+			   		<td>
+			   				<if condition="!empty($result['zt'])">
+						<if condition="$result.zt eq 0">禁用</if>
+						<if condition="$result.zt eq 1">启用</if>
+				   		<if condition="$result.zt eq 2">待审核</if>
+				   		<if condition="$result.zt eq 3">下架</if>
+				   		
+						</if>
+			   		</td>
+			   		<td><b>商品状态(厂商入库商品的状态)</b></td>
+			   		<td><if condition="!empty($result['spzt'])">
+						<if condition="$result.spzt eq 0">初始化</if>
+						<if condition="$result.spzt eq 1">待审核</if>
+				   		<if condition="$result.spzt eq 2">上线</if>
+				   		<if condition="$result.spzt eq 3">下线</if>
+				   		<if condition="$result.spzt eq 4">已删除</if>
+				   		<if condition="$result.spzt eq 5">审核不通过</if>
+						</if>
+					</td>
+			   		<td><b>商品入库时间</b></td>
+			   		<td>
+			   			{$result.sprksj}
+			   		</td>
+			  	</tr>
+				<if condition="!empty($result['parametersList'])">
+				<tr>
+					<td colspan="2">
+						<b>商品对应的参数列表信息</b>
+					</td>				
+					<td colspan="6">
+                      <foreach name="result.parametersList" item="vo">
+                      <p>{$vo.CSSM}----{$vo.CSZ}</p>
+                      </foreach>
+					</td>
+				</tr>
+				</if>
+				<if condition="!empty($result['accessoryList'])">
+				<tr>
+					<td colspan="2">
+						<b>商品配件</b>
+					</td>				
+					<td colspan="6">
+					<foreach name="result.accessoryList" item="vo">	
+                      <p>{$vo.PJBH}----{$vo.PJMC}---{$vo.ZT}----{$vo.PJJG}</p>
+                     </foreach>
+					</td>
+				</tr>
+				</if>
+				<if condition="!empty($result['serviceList'])">
+				<tr>
+					<td colspan="2">
+						<b>服务列表</b>
+					</td>				
+					<td colspan="6">
+                      <foreach name="result.serviceList" item="vo">
+						<p>{$vo.FWBH}----{$vo.FWMC}---{$vo.ZT}----{$vo.FWJG}</p>
+                      </foreach>
+					</td>
+				</tr>
+				</if>
+			</table>
+			
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

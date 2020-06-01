@@ -1,0 +1,80 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('goods/quote_goods')}">报价商品</a></li>
+			<li class="active"><a href="{:url('mall/shangjia')}">上架</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('mall/shangjiapost')}">
+			<input type="hidden" name="id" value="{$id}" />
+			
+			<div class="form-group">
+				<label for="input-pic" class="col-sm-2 control-label">商品主图<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<div style="text-align: center;">
+                                <input type="hidden" name="post[pic]" id="thumbnail"
+                                       value="{$post.pic|default=''}">
+                                <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                                    <if condition="empty($post.pic)">
+                                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                        <else/>
+                                        <img src="{:cmf_get_image_preview_url($post.pic)}"
+                                             id="thumbnail-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </if>
+                                </a>
+                                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片">
+                            </div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-wybs" class="col-sm-2 control-label">商品的价格<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input class="form-control" type="text" name="post[price]"
+                                   value="{$post['price']}" placeholder="请输入商品的价格">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-wybs" class="col-sm-2 control-label">商品详情<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<script type="text/plain" id="content" name="post[content]">{$post.content}</script>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        editorcontent = new baidu.editor.ui.Editor();
+        editorcontent.render('content');
+        try {
+            editorcontent.sync();
+        } catch (err) {
+        }
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+        $('#more-template-select').val("{$post.more.template|default=''}");
+    });
+</script>
+</body>
+</html>

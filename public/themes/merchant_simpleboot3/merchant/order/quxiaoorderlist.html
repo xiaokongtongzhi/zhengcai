@@ -1,0 +1,137 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">已取消订单列表</a></li>
+    </ul>
+     <form class="well form-inline margin-top-20" method="post" action="{:url('order/refuse_order')}">
+       联系人:
+        <input type="text" class="form-control" id="keyword" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="请输入联系人">
+        联系电话:
+        <input type="text" class="form-control" id="tel" name="tel" style="width: 200px;"
+               value="{$tel|default=''}" placeholder="请输入联系电话">
+        提交时间:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+               value="{$start_time|default=''}"
+               style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time"
+               value="{$end_time|default=''}"
+               style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('order/refuse_order')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="70">ID</th>
+				<th>订单编号</th>
+                <th>送货城市</th>
+                <th>送货区/县</th>
+                <th>采购人名称</th> 
+                <th>需方联系人</th>
+                <th>需方电话</th>
+                <th>电商名称</th>
+                <th>订单金额</th>
+                <th>订单提交时间</th>
+                <th>订单状态</th>
+                <th width="">支付方式</th>
+                <th width="">操作</th>
+            </tr>
+            </thead>
+            <php>$status = array('0'=>'待确认','1'=>'待送货','2'=>'待收货','3'=>'待开票','4'=>'待收款','5'=>'已完成','10'=>'已拒绝','11'=>'已取消');</php>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td><b>{$vo.id}</b></td>
+                    <td>
+                        {$vo.ddbh}
+                    </td> 
+                    <td >
+                        {$vo.deliverycity}
+                    </td>
+					<td>{$vo.deliverycounty}</td> 
+                    <td title='{$vo.cgrmc}'>{$vo.cgrmc}</td>
+                   <td>
+                        {$vo.xflxrxm}
+                    </td> 
+                    <td title='{$vo.xfdh}'>
+                        {$vo.xfdh}
+                    </td>
+                    <td>
+                        {$vo.ghsmc}
+
+                    </td>
+                    <td title='{$vo.ddze}'>
+                        {$vo.ddze}
+                    </td>
+                    <td>
+                       {$vo.cjrq}
+                    </td>
+                    <td>
+                       {$status[$vo.status]}
+                    </td>
+					<td>
+					<if condition="$vo['zffs']=='70080001'">
+						现金
+					<elseif condition="$vo['zffs']=='70080002'"/>
+						公务卡结算
+					<elseif condition="$vo['zffs']=='70080003'"/>
+						银行转账
+					<elseif condition="$vo['zffs']=='70080004'"/>
+                        银行支票
+                      </if>  
+                    </td>
+                    <td>
+                        <a href="{:url('Order/info',array('id'=>$vo['id']))}">查看详情</a>
+                    </td>
+                </tr>
+            </foreach>
+            <tfoot>
+            <tr>
+                <th width="70">ID</th>
+				<th>订单编号</th>
+                <th>送货城市</th>
+                <th>送货区/县</th>
+                <th>采购人名称</th> 
+                <th>需方联系人</th>
+                <th>需方电话</th>
+                <th>电商名称</th>
+                <th>订单金额</th>
+                <th>订单提交时间</th>
+                <th>订单状态</th>
+                <th width="">支付方式</th>
+                <th width="">操作</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+
+    $(function () {
+        $('select[name="category"]').change(function(){
+            val=$(this).val();
+            if(val==0){
+                $('input[name="keyword"]').attr('placeholder','请输入型号/品牌/类别');
+            }else if(val==1){
+                $('input[name="keyword"]').attr('placeholder','请输入型号');
+            }else if(val==2){
+                $('input[name="keyword"]').attr('placeholder','请输入品牌');
+            }else if(val==3){
+                $('input[name="keyword"]').attr('placeholder','请输入类别');
+            }
+        })
+    });
+</script>
+</body>
+</html>

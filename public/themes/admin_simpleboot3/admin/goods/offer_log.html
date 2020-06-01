@@ -1,0 +1,65 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li ><a href="{:url('Goods/quote_goods')}">商品列表</a></li>
+		<li class="active"><a href="javascript:;">报价记录</a></li>
+    </ul>
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="70">ID</th>
+				<th>商品ID</th>
+				<th>商品名称</th>
+                <th>报价价格</th>
+                <th>报价状态</th>
+                <th>报价时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td><b>{$vo.id}</b></td>
+					<td>{$vo.goods.id}</td>
+					<td>{$vo.goods.xhmc}</td>
+                    <td>{$vo.price}元</td>
+                    <td>
+						<if condition="$vo.status eq 0">报价成功</if>
+						<if condition="$vo.status eq 1">报价审核中</if>
+						<if condition="$vo.status eq 2">报价已撤销</if>
+					</td>
+                    <td>{:date('Y-m-d H:i',$vo['create_time'])}</td>
+                    <td>
+						<if condition="$vo.status eq 1"><a class="btn btn-xs btn-danger js-ajax-dialog-btn" data-msg="确定要撤销报价吗" href="{:url('Goods/chexiao',array('goods_id'=>$vo['goods_id'],'id'=>$vo['id']))}">撤销报价</a> | <a class="btn btn-xs btn-danger js-ajax-dialog-btn" data-msg="确定要报价审核通过吗" href="{:url('Goods/baojiasucess',array('goods_id'=>$vo['goods_id'],'id'=>$vo['id']))}">报价审核通过</a></if>
+						
+                    </td>
+                </tr>
+            </foreach>
+            <tfoot>
+            <tr>
+                <th width="70">ID</th>
+				<th>商品ID</th>
+				<th>商品名称</th>
+                <th>报价价格</th>
+                <th>报价状态</th>
+                <th>报价时间</th>
+                <th>操作</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+</script>
+</body>
+</html>

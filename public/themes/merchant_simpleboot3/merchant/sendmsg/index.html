@@ -1,0 +1,32 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">政商平台参数设置</a></li>
+    </ul>
+    <form action="{:url('sendmsg/indexpost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+		<table class="table table-hover table-bordered table-list" style="margin-top:20px;">
+			<tr>
+				<td style="width:220px;"><b>对接政商平台的账号<span style="color:red;">*</span></b></td><td><input type="text" class="form-control" name="options[zsnameconfig]" value="{$site_info.zsnameconfig|default=''}" ></td>
+			</tr>
+			<tr>
+				<td style="width:220px;"><b>对接政商平台的密码<span style="color:red;">*</span></b></td><td><input type="password" class="form-control" name="options[zspwd]" value="{$site_info.zspwd|default=''}" ></td>
+			</tr>
+		</table>
+        <div class="form-group" style="margin-top:20px;">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-success js-ajax-submit" type="submit">{:lang('提交')}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+</script>
+</body>
+</html>

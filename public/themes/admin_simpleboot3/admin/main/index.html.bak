@@ -1,0 +1,261 @@
+
+<style>
+	.list-tts li{
+		float:left;
+		width:25%;
+		text-align:center;
+		line-height:30px;
+	}
+	.list-tts li a{
+		font-size:26px;
+	}
+	.list-tts li p{
+		color:#666;
+	}
+</style>      
+<include file="public@header"/>
+<style>
+    .home-info li em {
+        float: left;
+        width: 120px;
+        font-style: normal;
+        font-weight: bold;
+    }
+
+    .home-info ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .panel {
+        margin-bottom: 0;
+    }
+
+    .grid-sizer {
+        width: 10%;
+    }
+
+    .grid-item {
+        margin-bottom: 5px;
+        padding: 5px;
+    }
+
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+        padding-left: 5px;
+        padding-right: 5px;
+        float: none;
+    }
+
+</style>
+<hook name="admin_before_head_end"/>
+</head>
+<body>
+<div class="wrap">
+    <div class="panel panel-default">
+			<div class="panel-heading">
+                <h3 class="panel-title">商品/报价</h3>
+            </div>
+            <div class="panel-body home-info">
+                <ul class="list-unstyled list-tts">
+                    <li>
+                        <a>{$goods['total']}</a><p>总计商品</p>
+                    </li>
+					<li>
+                        <a>{$goods['yibaojia']}</a><p>已报价商品</p>
+                    </li>
+					<li>
+                        <a>{$goods['weibaojia']}</a><p>未报价商品</p>
+                    </li>
+                    <li>
+                        <a>{$goods['cexiao']}</a><p>撤销报价商品</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+		<div class="panel panel-default" style="margin-top:20px;height:50%;">
+			<div class="panel-heading">
+                <h3 class="panel-title">订单</h3>
+            </div>
+			 <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+app.title = '订单量';
+
+option = {
+    title: {
+        text: '',
+        subtext: ''
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: ['']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.01]
+    },
+    yAxis: {
+        type: 'category',
+        data: ['已拒绝订单','已完成订单','待收款订单','待开票订单','待收货订单','待送货订单','待确定订单','订单状态(个)']
+    },
+    series: [
+        {
+            name: '',
+            type: 'bar',
+            data: [{$order['yijujue']}, {$order['yiwancheng']}, {$order['daishoukuan']}, {$order['daikaipiao']}, {$order['daishouhuo']}, {$order['daisonghuo']},{$order['total']}]
+        }
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+           <!--  <div class="panel-body home-info">
+               <ul class="list-unstyled list-tts">
+                    <li>
+                        <a>{$order['total']}</a><p>待确定订单</p>
+                    </li>
+					<li>
+                        <a>{$order['daisonghuo']}</a><p>待送货订单</p>
+                    </li>
+                    <li>
+                        <a>{$order['daishouhuo']}</a><p>待收货订单</p>
+                    </li>
+					<li>
+                        <a>{$order['daikaipiao']}</a><p>待开票订单</p>
+                    </li>
+					<li>
+                        <a>{$order['daishoukuan']}</a><p>待收款订单</p>
+                    </li>
+                    <li>
+                        <a>{$order['yiwancheng']}</a><p>已完成订单</p>
+                    </li>
+					<li>
+                        <a>{$order['yijujue']}</a><p>已拒绝订单</p>
+                    </li>
+                </ul>
+            </div> -->
+        </div>
+		<div class="panel panel-default" style="margin-top:20px;">
+			<div class="panel-heading">
+                <h3 class="panel-title">发票</h3>
+            </div>
+            <div class="panel-body home-info">
+                <ul class="list-unstyled list-tts">
+                    <li>
+                        <a>{$kaipiao['daikaipiao']}</a><p>代开票</p>
+                    </li>
+					<li>
+                        <a>{$kaipiao['yikaipiao']}</a><p>已开票</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<php>
+    $lang_set=defined('LANG_SET')?LANG_SET:'';
+    $thinkcmf_version=cmf_version();
+</php>
+<script>
+
+    Wind.css('dragula');
+    Wind.use('masonry', 'imagesloaded', 'dragula', function () {
+        var $homeGrid = $('.home-grid').masonry({
+            // set itemSelector so .grid-sizer is not used in layout
+            itemSelector: '.grid-item',
+            // use element for option
+            columnWidth: '.grid-sizer',
+            percentPosition: true,
+            horizontalOrder: false,
+            transitionDuration: 0
+        });
+
+        $homeGrid.masonry('on', 'layoutComplete', function (event, laidOutItems) {
+        });
+
+
+        $homeGrid.masonry();
+
+        var containers = [];
+        $('.home-grid .grid-item').each(function () {
+            containers.push(this);
+        });
+        dragula(containers, {
+            isContainer: function (el) {
+                return false; // only elements in drake.containers will be taken into account
+            },
+            moves: function (el, source, handle, sibling) {
+                return true; // elements are always draggable by default
+            },
+            accepts: function (el, target, source, sibling) {
+                return true; // elements can be dropped in any of the `containers` by default
+            },
+            invalid: function (el, handle) {
+                return false; // don't prevent any drags from initiating by default
+            },
+            direction: 'vertical',             // Y axis is considered when determining where an element would be dropped
+            copy: false,                       // elements are moved by default, not copied
+            copySortSource: false,             // elements in copy-source containers can be reordered
+            revertOnSpill: false,              // spilling will put the element back where it was dragged from, if this is true
+            removeOnSpill: false,              // spilling will `.remove` the element, if this is true
+            mirrorContainer: document.body,    // set the element that gets mirror elements appended
+            ignoreInputTextSelection: true     // allows users to select input text, see details below
+        }).on('drop', function (el, target, source, sibling) {
+            var $target          = $(target);
+            var targetClasses    = $target.attr('class');
+            var targetDataWidget = $target.data('widget');
+            var targetDataSystem = $target.data('system');
+            var $source          = $(source);
+            var sourceClasses    = $source.attr('class');
+            var sourceDataWidget = $source.data('widget');
+            var sourceDataSystem = $source.data('system');
+            $(source).append($(target).find('.dashboard-box').not('.gu-transit'));
+            $(target).append(el);
+            $target.attr('class', sourceClasses);
+            $target.data('widget', sourceDataWidget);
+            $target.data('system', sourceDataSystem);
+
+            $source.attr('class', targetClasses);
+            $source.data('widget', targetDataWidget);
+            $source.data('system', targetDataSystem);
+            $homeGrid.masonry();
+
+            _widgetSort();
+        }).on('shadow', function (el, container, source) {
+            $homeGrid.masonry();
+        });
+
+
+    });
+
+
+   
+</script>
+<hook name="admin_before_body_end"/>
+</body>
+</html>

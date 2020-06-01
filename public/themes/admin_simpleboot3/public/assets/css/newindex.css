@@ -1,0 +1,59 @@
+body,div,ul,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,form,input,button,textarea,th,td,p,tbody,thead,tfooter{
+	margin:0;padding:0;
+}
+.borderbox{
+	-moz-box-sizing: border-box;  
+	-webkit-box-sizing: border-box; 
+	-o-box-sizing: border-box; 
+	-ms-box-sizing: border-box; 
+	box-sizing: border-box;
+}
+ul,li{list-style:none;}
+.fl{float:left;display:inline-block;}
+.fr{float:right;display:inline-block;}
+.clearfix:after{content:" ";display:block;clear:both;height:0px;visibility:hidden;}
+.clearfix{zoom:1;}
+
+.indexbg{background:#f3f3f4; min-height:100%; }
+.index-wrap{padding:20px 20px 30px !important; }
+.rowbox{margin-bottom:15px; }
+.rowbox-tit{border-top:4px solid #e7eaec;background:#fff; padding:11px 15px;border-bottom:1px solid #e7eaec; }
+.rowbox-tit h5{line-height:22px;font-size:14px;color:rgb(103, 106, 108);}
+.rowbox-tit .label{margin-top: 2px; }
+.rowbox-cont{padding:15px 20px 20px; background:#fff; }
+.rowbox-cont>a{display:block;text-decoration:none; }
+.rowbox-cont>a:hover{text-decoration:none; }
+.rowbox-cont>a .num{font-size:30px;line-height:32px;color:rgb(103, 106, 108);}
+.rowbox-cont>a .status{font-size:14px; color:#333; line-height:1.5; margin-top:5px; }
+
+.indexChart{width:100%; height:350px;position:relative;}
+.btn-white{color: inherit;background: #fff; border: 1px solid #e7eaec;line-height:20px;}
+
+/*商品销量排行*/
+.sales-top{margin-bottom:10px;font-size:14px;color:#333; line-height:1.5;}
+.sales-top .colorblue{color:#1e9fff;}
+.sales-top .colororange{color:#ff5722;}
+
+.sales-list li{margin-bottom:8px;}
+.sales-list .proname{font-size:14px;color:#333; line-height:1.5;margin-bottom:5px;}
+.sales-list .barbox{width:90%;height:12px;border-radius:12px;background:#e2e2e2; }
+.sales-list .barbox .barbox-inner{display:block;width:20%; height:12px; border-radius:12px; background:#ff5722;}
+.sales-list li:nth-child(2) .barbox .barbox-inner{background:#ffb800; }
+.sales-list li:nth-child(3) .barbox .barbox-inner{background:#009688; }
+.sales-list li:nth-child(4) .barbox .barbox-inner{background:#1e9fff; }
+.sales-list li:nth-child(5) .barbox .barbox-inner{background:#2f4056; }
+.sales-list li:nth-child(6) .barbox .barbox-inner{background:#ff5722; }
+.sales-list li:nth-child(7) .barbox .barbox-inner{background:#ffb800; }
+.sales-list li:nth-child(8) .barbox .barbox-inner{background:#009688; }
+.sales-list li:nth-child(9) .barbox .barbox-inner{background:#1e9fff; }
+.sales-list li:nth-child(10) .barbox .barbox-inner{background:#2f4056; }
+.sales-list .barnum{line-height:12px;font-size:14px;color:#0092dc; padding-left:10px;}
+
+/*.leiji-wrap{min-height:490px;}*/
+.leiji-wrap .sales-list .barbox{width:85%;margin-bottom:10px;}
+.leiji-wrap .sales-list li{margin-bottom:20px; }
+.leiji-wrap .sales-list .proname{color:#666;}
+.sales-list li .maxnum{font-size:26px; color:#666; line-height:1.7;margin-bottom:10px; }
+.barnum.colorred{color:red;}
+.barnum.colorgreen{color:#0092dc;}
+

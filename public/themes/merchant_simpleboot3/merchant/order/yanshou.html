@@ -1,0 +1,34 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('order/song')}">待送货订单</a></li>
+			<li class="active"><a href="{:url('order/yanshou')}">验收</a></li>
+		</ul>
+		
+			<div class="form-group" style="margin-top:100px;">
+				<label for="input-kdgs" class="col-sm-1 control-label">验收时间<span class="form-required">*</span></label>
+				<div class="col-md-3 col-sm-10">
+				<if condition="!empty($data['yssj'])">
+					{$data.yssj}
+				</if>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-kddh" class="col-sm-1 control-label">验收标志<span class="form-required">*</span></label>
+				<div class="col-md-3 col-sm-10">
+				<if condition="!empty($data['ysbz'])">
+					<if condition="$data['ysbz'] ==1">
+						自动验收
+					<else/>
+						人工验收
+					</if>
+				</if>
+				</div>
+			</div>
+
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

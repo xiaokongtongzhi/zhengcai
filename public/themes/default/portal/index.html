@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{$site_info.mallname}首页</title>
+  <link rel="stylesheet" type="text/css" href="__TMPL__/demo/public/assets/static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="__TMPL__/demo/public/assets/layui/css/layui.css">
+  <script type="text/javascript" src="__TMPL__/demo/public/assets/layui/layui.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <style>
+  .content .category-tab-content .nav-con .nav-item .title{
+	line-height:43px;
+  }
+  .list-item img{width:160px;height:210px;}
+  </style>
+</head>
+<body id="list-cont">
+  <div class="site-nav-bg">
+    <div class="site-nav w1200">
+      <p class="sn-back-home">
+        <i class="layui-icon layui-icon-home"></i>
+        <a href="/">首页</a>
+      </p>
+      <div class="sn-quick-menu">
+        <div class="login"><a href="login.html">登录</a></div>
+        <div class="sp-cart"><a href="shopcart.html">购物车</a><span>2</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="header">
+    <div class="headerLayout w1200">
+      <div class="headerCon">
+        <h1 class="mallLogo">
+          <a href="/" title="{$site_info.mallname}">
+		  <if condition="empty($site_info.malllogo)">
+		   <img src="__TMPL__/demo/public/assets/static/img/logo.png">
+		  <else/>
+		   <img src="{$site_info.malllogo}">
+		  </if>
+           
+			
+          </a>
+        </h1>
+        <div class="mallSearch">
+          <form action="" class="layui-form" novalidate>
+            <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">
+                <i class="layui-icon layui-icon-search"></i>
+            </button>
+            <input type="hidden" name="" value="">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content">
+    <div class="main-nav">
+      <div class="inner-cont0">
+        <div class="inner-cont1 w1200">
+          <div class="inner-cont2">
+            <a href="commodity.html" class="active">所有商品</a>
+            <a href="about.html">关于我们</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="category-con">
+      <div class="category-inner-con w1200">
+        <div class="category-type">
+          <h3>全部分类</h3>
+        </div>
+        <div class="category-tab-content">
+          <div class="nav-con">
+            <ul class="normal-nav layui-clear">
+			<foreach name="catedata"  item="vo" >
+			
+              <li class="nav-item">
+                <div class="title"><a href="{:url('portal/index/cate',array('lbbh'=>$vo.lbbh))}">{$vo.lbmc|substr=0,23}</a></div>
+               
+                <i class="layui-icon layui-icon-right"></i>
+              </li>
+			  
+             </foreach>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="category-banner" style="background:#ccc;">
+        <div class="" style="width:100%;height:400px;">
+			<if condition="empty($site_info.mallbackground)">
+			<img src="__TMPL__/demo/public/assets/static/img/banner1.jpg" style="width:100%;height:400px;">
+			<else/>
+           <img src="/upload/{$site_info.mallbackground}" style="width:100%;height:400px;">
+		   </if>
+        </div>
+      </div>
+    </div>
+    <div class="product-cont w1200" id="product-cont">
+      <div class="product-item product-item1 layui-clear">
+        <div class="left-title">
+          <h4><i>1F</i></h4>
+          <img src="__TMPL__/demo/public/assets/static/img/icon_gou.png">
+          <h5>计算机</h5>
+        </div>
+        <div class="right-cont">
+         <div class="img-box">
+		 <foreach name="onedata" item="vo" key="k">
+			<if condition="$k==5">
+			</div>
+            <div class="img-box">
+			</if>
+            <a href="{:url('portal/index/detail',array('id'=>$vo['id']))}"><if condition="!empty($vo.pic)"><img src="{:cmf_get_image_preview_url($vo.pic)}"><else/>
+			<img src="__TMPL__/demo/public/assets/images/default-thumbnail.png"/>
+			</if></a>
+          </foreach>
+          </div>
+        </div>
+      </div>
+      <div class="product-item product-item2 layui-clear">
+        <div class="left-title">
+          <h4><i>2F</i></h4>
+          <img src="__TMPL__/demo/public/assets/static/img/icon_gou.png">
+          <h5>办公外设</h5>
+        </div>
+        <div class="right-cont">
+         <div class="img-box">
+            <foreach name="twodata" item="vo" key="k">
+			<if condition="$k==5">
+			</div>
+            <div class="img-box">
+			</if>
+            <a href="{:url('portal/index/detail',array('id'=>$vo['id']))}"><if condition="!empty($vo.pic)"><img src="{:cmf_get_image_preview_url($vo.pic)}"><else/>
+			<img src="__TMPL__/demo/public/assets/images/default-thumbnail.png"/>
+			</if></a>
+          </foreach>
+          </div>
+        </div>
+      </div>
+      <div class="product-item product-item3 layui-clear">
+        <div class="left-title">
+          <h4><i>3F</i></h4>
+          <img src="__TMPL__/demo/public/assets/static/img/icon_gou.png">
+          <h5>办公家具</h5>
+        </div>
+        <div class="right-cont">
+          <div class="img-box">
+           <foreach name="threedata" item="vo" key="k">
+			<if condition="$k==5">
+			</div>
+            <div class="img-box">
+			</if>
+            <a href="{:url('portal/index/detail',array('id'=>$vo['id']))}"><if condition="!empty($vo.pic)"><img src="{:cmf_get_image_preview_url($vo.pic)}"><else/>
+			<img src="__TMPL__/demo/public/assets/images/default-thumbnail.png"/>
+			</if></a>
+          </foreach>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-list-box" id="product-list-box">
+      <div class="product-list-cont w1200">
+        <h4>更多推荐</h4>
+        <div class="product-item-box layui-clear">
+		<foreach name="data" item="vo" key="k">
+          <div class="list-item">
+            <a href="{:url('portal/index/detail',array('id'=>$vo['id']))}"><if condition="!empty($vo.pic)"><img src="{:cmf_get_image_preview_url($vo.pic)}"><else/>
+			<img src="__TMPL__/demo/public/assets/images/default-thumbnail.png"/>
+			</if></a>
+            <p>{$vo.xhmc|substr=0,35}</p>
+            <span>￥
+			<if condition="$vo['quote_price'] gt $vo['price']">
+			{$vo.quote_price}
+			<else/>
+			{$vo.price}
+			</if>
+			</span>
+          </div>
+          </foreach>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="ng-promise-box">
+      <div class="ng-promise w1200">
+        <p class="text">
+          <a class="icon1" href="javascript:;">7天无理由退换货</a>
+          <a class="icon2" href="javascript:;">满99元全场免邮</a>
+          <a class="icon3" style="margin-right: 0" href="javascript:;">100%品质保证</a>
+        </p>
+      </div>
+    </div>
+    <div class="mod_help w1200">                                     
+      <p>
+        <a href="javascript:;">关于我们</a>
+        <span>|</span>
+        <a href="javascript:;">帮助中心</a>
+        <span>|</span>
+        <a href="javascript:;">售后服务</a>
+        <span>|</span>
+        <a href="javascript:;">关于货源</a>
+      </p>
+      <p class="coty">商城版权所有 &copy; 2012-2020 </p>
+    </div>
+  </div>
+  <script type="text/javascript">
+
+layui.config({
+    base: '__TMPL__/demo/public/assets/static/js/util/' /你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['mm','carousel'],function(){
+      var carousel = layui.carousel,
+     mm = layui.mm;
+     var option = {
+        elem: '#test1'
+        ,width: '100%' /设置容器宽度
+        ,arrow: 'always'
+        ,height:'298' 
+        ,indicator:'none'
+      }
+      carousel.render(option);
+      / 模版引擎导入
+     / var ins = carousel.render(option);
+     / var html = demo.innerHTML;
+     / var listCont = document.getElementById('list-cont');
+     / / console.log(layui.router("#/about.html"))
+     /  mm.request({
+     /    url: '__TMPL__/demo/public/assetsjson/index.json',
+     /    success : function(res){
+     /      console.log(res)
+     /      listCont.innerHTML = mm.renderHtml(html,res)
+     /      ins.reload(option);
+     /    },
+     /    error: function(res){
+     /      console.log(res);
+     /    }
+     /  })
+    
+
+});
+  </script>
+</body>
+</html>

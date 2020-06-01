@@ -1,0 +1,101 @@
+<include file="public@header"/>
+<style type="text/css">
+    .form-group .control-label{
+        padding-top: 0;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<empty name='type'>
+        <ul class="nav nav-tabs">
+            <li><a href="{:url('Goods/index')}">商品列表</a></li>
+            <li class="active"><a href="#">商品详情</a></li>
+        </ul>
+    </empty>
+	<table class="table table-hover table-bordered table-list" style="margin-top:20px;">
+		<tr>
+			<td><b>类别名称</b></td><td>{$info.lbmc}</td>
+			<td><b>品目名称</b></td><td>{$info.pmmc}</td>
+			<td><b>品牌名称</b></td><td>{$info.ppmc}</td>
+			<td><b>型号名称</b></td><td>{$info.xhmc}</td>
+		</tr>
+		<tr>
+			<td><b>当前报价</b></td><td>{$info.quote_price}</td>
+			<td><b>商品地址</b></td><td><a href="{$info.goods_url}" target="_blank" >{$info.goods_url}</a></td>
+			<td><b>品目编号</b></td><td>{$info.pmbh}</td>
+			<td><b>品牌编号</b></td><td>{$info.ppbh}</td>
+		</tr>
+		<tr>
+			<td><b>上架状态</b></td><td>{$info.zt==2?'上线':'未上线'}</td>
+			<td><b>类别编号</b></td><td>{$info.lbbh}</td>
+			<td><b>型号编号</b></td><td>{$info.xhbh}</td>
+			<td><b>入库状态</b></td><td>
+                        <switch name='$info.spzt'>
+						   <case value='0'>初始化</case>  
+						   <case value='1'>待审核</case>  
+						   <case value='2'>上线</case>  
+						   <case value='3'>下线</case>  
+						   <case value='4'>已删除</case>  
+						   <case value='5'>审核不通过</case>
+						</switch></td>
+		</tr>
+	</table>
+	<div style="margin-top:40px;">
+		<h4>商品对应的参数列表信息</h4>
+		<table class="table table-hover table-bordered table-list" >
+			<php>
+				$parametersList=json_decode($info['parametersList'],true);
+			</php>
+			<thead>
+			<tr>
+				<foreach name='parametersList' item='vo'>
+					<th>{$vo.cssm}</th>
+				</foreach>
+			</tr>
+			</thead>
+			<tr>
+				<foreach name='parametersList' item='vo'>
+				<td>{$vo.csz}</td>
+				</foreach>
+			</tr>
+		</table>
+	</div>
+	
+	<form action="{:url('goods/goods_quote_post',array('id'=>$info['id']))}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+		<input type="hidden" name='id' value="{$info.id}">
+		<notempty name="type">
+			<table class="table table-hover table-bordered table-list" style="margin-top:20px;">
+				<tr>
+					<td><b>报价<span style="color:red;">*</span></b></td><td><input type="text" class="form-control" name="price" value="<if condition='empty($info.quote_price)'>{$info.price}<else/>{$info.quote_price}</if>"></td>
+				</tr>
+              <tr>
+					<td><b>自有价格<span style="color:red;">*</span></b></td><td><input type="text" class="form-control" name="zyjg" value="{$info.zyjg}" placeholder="自有商城改商品价格"/></td>
+				</tr>
+				<tr>
+					<td><b>商品地址<span style="color:red;">*</span></b></td><td><input type="text" class="form-control" name="goods_url" value="{$info.goods_url}"></td>
+				</tr>
+				<tr>
+					<td><b>报价说明<span style="color:red;">*</span></b></td><td><textarea class="form-control" name="jgsfyy"></textarea></td>
+				</tr>
+				<tr>
+					<td><b>服务承诺</b></td><td><textarea class="form-control" name="fwcn"></textarea></td>
+				</tr>
+			</table>
+		</notempty>
+        <div class="form-group" style="margin-top:20px;">
+            <div class="col-sm-offset-2 col-sm-10">
+                <notempty name="type">
+                    <button class="btn btn-success js-ajax-submit" type="submit">{:lang('提交')}</button>
+                </notempty>
+                <a class="btn btn-default" href="javascript:history.go(-1);">{:lang('BACK')}</a>
+            </div>
+        </div>
+    </form>
+	
+</div>
+
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+
+</body>
+</html>
