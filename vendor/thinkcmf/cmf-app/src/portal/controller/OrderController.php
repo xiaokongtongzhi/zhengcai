@@ -1,16 +1,9 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2013-2019 http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
-// +----------------------------------------------------------------------
+
 namespace app\portal\controller;
 
 use cmf\controller\HomeBaseController;
+use think\Db;
 
 class OrderController extends HomeBaseController
 {
@@ -36,53 +29,55 @@ class OrderController extends HomeBaseController
 		    'compression'   => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE,
 		);
 		
-		 $client = new \SoapClient(config('config.zs_url'),$sets);
-		 //var_dump($client);die;
-		 $m['username']=$this->zsnameconfig;
-		 $m['pwd']=$this->zspwdconfig;
-		 $m['kssj']=$sprkkssj;
-		 $m['jssj']=$sprkjssj;
-		 $m['zt']=2;
-		 $m['pageNum']=1;
-		 $m['pageSize']=50;
-    
-		 $mm=json_encode($m);
-		 $res = $client->findOrder(array('in0'=>$mm));/* 调用方法 */
-		 $result=json_decode($res->out,true);
-		 //var_dump($res);die;
-		 if($result['resultFlag'] == 'Y'){
-			 $pagecount=ceil($result['count']/$m['pageSize']);
-			 for($i=1;$i<$pagecount+1;$i++){
-				 $in=array();
-				 $m['username']=$this->zsnameconfig;
-				 $m['pwd']=$this->zspwdconfig;
-				 $m['kssj']=$sprkkssj;
-				 $m['jssj']=$sprkjssj;
-				 $m['zt']=2;
-				 $m['pageNum']=$i;
-				 $m['pageSize']=50;
-				 $mm=json_encode($m);
-				 $res = $client->findOrder(array('in0'=>$mm));/* 调用方法 */
-				 $result=json_decode($res->out,true);
-				 //var_dump($result);
-				 if($result['resultFlag'] == 'Y'){
-				  //var_dump($result['pagecount']);
-				 $data=$result['orderList'];
-				 // var_dump($data);
-				 foreach ($data as $key=>$v){
-				 	$info = db('order')->where(['ddbh'=>$v['ddbh']])->find();
-				 	if(empty($info)){
-				 		$v['productList']=json_encode($v['productList']);
-				 		array_push($in, $v);
-				 	}
+		$client = new \SoapClient(config('config.zs_url'),$sets);
+		$m_data = db('merchant')->field('id,zsnameconfig,zspwdconfig')->where('end_time','>',time())->where('user_status',1)->select()->toArray();
+		foreach ($m_data as $key => $val) {
+			$m['username']=$val['zsnameconfig'];
+			$m['pwd']=$val['zspwdconfig'];
+			$m['kssj']=$sprkkssj;
+			$m['jssj']=$sprkjssj;
+			$m['zt']=2;
+			$m['pageNum']=1;
+			$m['pageSize']=50;
+			$mm=json_encode($m);
+			$res = $client->findOrder(array('in0'=>$mm));/* 调用方法 */
+			$result=json_decode($res->out,true);
+			//var_dump($res);die;
+			if($result['resultFlag'] == 'Y'){
+				$pagecount=ceil($result['count']/$m['pageSize']);
+				for($i=1;$i<$pagecount+1;$i++){
+					$in=array();
+					$m['username']=$val['zsnameconfig'];
+					$m['pwd']=$val['zspwdconfig'];
+					$m['kssj']=$sprkkssj;
+					$m['jssj']=$sprkjssj;
+					$m['zt']=2;
+					$m['pageNum']=$i;
+					$m['pageSize']=50;
+					$mm=json_encode($m);
+					$res = $client->findOrder(array('in0'=>$mm));/* 调用方法 */
+					$result=json_decode($res->out,true);
+					 //var_dump($result);
+					if($result['resultFlag'] == 'Y'){
+					  //var_dump($result['pagecount']);
+					$data=$result['orderList'];
+					 // var_dump($data);
+					foreach ($data as $key=>$v){
+					 	$info = db('order')->where(['ddbh'=>$v['ddbh']])->find();
+					 	if(empty($info)){
+					 		$v['productList']=json_encode($v['productList']);
+					 		$v['merchant_id'] = $val['id'];
+					 		array_push($in, $v);
+					 	}
+					}
+					//var_dump(count($in));
+					db("order")->insertAll($in);
+					//sleep(1);
+					}
 				}
-				//var_dump(count($in));
-				db("order")->insertAll($in);
-				//sleep(1);
-				}
-			 }
-		 }
-		 exit;
+			}
+		}
+		exit;
     }
 	//确认订单
 	 public function sure()

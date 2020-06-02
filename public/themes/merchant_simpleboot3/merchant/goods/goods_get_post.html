@@ -1,0 +1,151 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">商品获取</a></li>
+    </ul>
+   
+	<notempty  name="list">
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <!-- <th>型号编号</th> -->
+                <th>型号名称</th>
+                <!-- <th>品目编号</th> -->
+                <th>品目名称</th>
+                <!-- <th>品牌编号</th> -->
+                <th>品牌名称</th>
+                <!-- <th>类别编号</th> -->
+                <th>类别名称</th>
+                <th>配件信息</th>
+                <th>增值服务</th>
+                <th width="80">上架状态</th>
+                <th width="80">是否报价</th>
+                <th width="150">操作</th>
+            </tr>
+            </thead>
+            <foreach name="list" item="vo">
+                <tr>
+                    <!-- <td>
+                        {$vo.xhbh}
+                    </td> -->
+                    <td title='{$vo.xhbh}'>
+                        {$vo.xhmc}
+                    </td>
+                    <!-- <td>{$vo.pmbh}</td> -->
+                    <td title='{$vo.pmbh}'>{$vo.pmmc}</td>
+                    <!-- <td>
+                        {$vo.ppbh}
+                    </td> -->
+                    <td title='{$vo.ppbh}'>
+                        {$vo.ppmc}
+                    </td>
+                    <!-- <td>
+                        {$vo.lbbh}
+
+                    </td> -->
+                    <td title='{$vo.lbbh}'>
+                        {$vo.lbmc}
+                    </td>
+                    <td>
+                        <notempty name='vo.parts'>
+                            <a href="javascript:openIframeDialog('{:url('Goods/parts',array('id'=>$vo['id'],'type'=>1))}','配置信息')">查看详情</a>
+                        <else />
+                            暂无配置信息
+                        </notempty>
+                    </td>
+                    <td>
+                        <notempty name='vo.service'>
+                            <a href="javascript:openIframeDialog('{:url('Goods/service',array('id'=>$vo['id'],'type'=>1))}','增值服务')">查看详情</a>
+                        <else />
+                            暂无增值服务
+                        </notempty>
+                        
+                    </td>
+                    <td>
+                        <eq name="vo.zt" value="2">
+                            <a data-toggle="tooltip" title="上线"><i class="fa fa-check"></i></a>
+                            <else/>
+                            <a data-toggle="tooltip" title="未上线"><i class="fa fa-close"></i></a>
+                        </eq>
+                    </td>
+                    <td>
+                        {$vo.quote_status?'是':'否'}
+                    </td>
+                    <td>
+                        
+                        
+                    </td>
+                </tr>
+            </foreach>
+            <tfoot>
+            <tr>
+                <th width="70">ID</th>
+                <!-- <th>型号编号</th> -->
+                <th>型号名称</th>
+                <!-- <th>品目编号</th> -->
+                <th>品目名称</th>
+                <!-- <th>品牌编号</th> -->
+                <th>品牌名称</th>
+                <!-- <th>类别编号</th> -->
+                <th>类别名称</th>
+                <th>配件信息</th>
+                <th>增值服务</th>
+                <th width="80">商品状态</th>
+                <th width="80">是否报价</th>
+                <th width="150">操作</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+        </div>
+        
+    </form>
+	</notempty >
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+
+    $("#starttime").bind('input propertychange',function(){
+				var val=$(this).val();
+				var oldTime = (new Date(val)).getTime(); //得到毫秒数
+				var newmite= oldTime+86400000*7;//86400000是1天
+				var endTime=$("#endtime").val();
+				var newTime3 = new Date(newmite);//参数是毫秒类型 可以不带参数 就是获取当前时间  传参数就是把毫秒装换成时间类型  
+				var aa=gshtime(newTime3);
+				var date= new Date(Date.parse(aa.replace(/-/g,  "/")));  
+				$("#endtime").val(formatDate(date));
+			});
+			function formatDate(date){  
+			    var y = date.getFullYear();  
+			    var m = date.getMonth() + 1;  
+			    m = m < 10 ? '0' + m : m;  
+			    var d = date.getDate();  
+			    d = d < 10 ? ('0' + d) : d;  
+			    return y + '-' + m + '-' + d;  
+			};  
+			function gshtime(time)  
+		      {   
+		          var year = time.getFullYear();
+		          var month = time.getMonth() + 1;    
+		          var day = time.getDate();         
+		          var hh = time.getHours();       
+		          var mm = time.getMinutes();    
+		          var str= year + "-";  
+		          if(month < 10)  
+		             str+= "0";  
+		          str+= month + "-";  
+		          if(day < 10)  
+		              str+= "0";  
+		          str+= day + " ";  
+		          return(str);   
+		      }  
+</script>
+</body>
+</html>

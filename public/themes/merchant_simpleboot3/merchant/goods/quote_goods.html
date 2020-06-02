@@ -1,0 +1,153 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">商品列表</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('Goods/quote_goods')}">
+        搜索类型:
+        <select class="form-control" name="category" style="width: 140px;">
+            <option {$category==0?'selected' :''} value='0'>全部</option>
+            <option {$category==1?'selected' :''} value='1'>型号</option>
+            <option {$category==2?'selected' :''} value='2'>品牌</option>
+            <option {$category==3?'selected' :''} value='3'>类别</option>
+            <!-- <option value='0'>全部</option> -->
+            <!-- <option value='0'>全部</option> -->
+        </select> &nbsp;&nbsp;
+        关键字:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="请输入型号/品牌/类别">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('Goods/quote_goods')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="70">ID</th>
+                <!-- <th>型号编号</th> -->
+                <th>型号名称</th>
+                <!-- <th>品目编号</th> -->
+                <th>品目名称</th>
+                <!-- <th>品牌编号</th> -->
+                <th>品牌名称</th>
+                <!-- <th>类别编号</th> -->
+				<th>类别名称</th>
+                <th>报价价格</th>
+                <th>配件信息</th>
+                <th>增值服务</th>
+                <th width="80">上架状态</th>
+                <!--<th width="80">是否报价</th> -->
+                <th>操作</th>
+            </tr>
+            </thead>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td><b>{$vo.id}</b></td>
+                    <!-- <td>
+                        {$vo.goods.xhbh}
+                    </td> -->
+                    <td title='{$vo.goods.xhbh}'>
+                        {$vo.goods.xhmc}
+                    </td>
+                    <!-- <td>{$vo.goods.pmbh}</td> -->
+                    <td title='{$vo.goods.pmbh}'>{$vo.goods.pmmc}</td>
+                    <!-- <td>
+                        {$vo.goods.ppbh}
+                    </td> -->
+                    <td title='{$vo.goods.ppbh}'>
+                        {$vo.goods.ppmc}
+                    </td>
+                    <!-- <td>
+                        {$vo.goods.lbbh}
+                    </td> -->
+                    <td title='{$vo.goods.lbbh}'>
+                        {$vo.goods.lbmc}
+                    </td>
+					<td title='{$vo.goods.lbbh}'>
+                        {$vo.quote_price}元
+                    </td>
+                    <td>
+                        <notempty name='vo.goods.parts'>
+                            <a href="javascript:openIframeDialog('{:url('Goods/parts',array('id'=>$vo['id']))}','配置信息')">查看详情</a>
+                        <else />
+                            暂无配置信息
+                        </notempty>
+                    </td>
+                    <td>
+                        <notempty name='vo.goods.service'>
+                            <a href="javascript:openIframeDialog('{:url('Goods/service',array('id'=>$vo['id']))}','增值服务')">查看详情</a>
+                        <else />
+                            暂无增值服务
+                        </notempty>
+                        
+                    </td>
+                    <td>
+                        <eq name="vo.zt" value="2">
+                            <a data-toggle="tooltip" title="上线"><i class="fa fa-check"></i></a>
+                            <else/>
+                            <a data-toggle="tooltip" title="未上线"><i class="fa fa-close"></i></a>
+                        </eq>
+                    </td>
+                   <!-- <td>{$vo.quote_status?'是':'否'}</td> -->
+                    <td>
+                        <a href="{:url('Goods/info',array('id'=>$vo['goods_id']))}">查看详情</a>
+						<a href="{:url('Goods/offer_log',array('id'=>$vo['goods_id']))}">报价记录</a>
+						<a href="{:url('Mall/shangjia',array('id'=>$vo['id']))}">上架本地商城</a>
+						<a href="javascript:openIframeDialog('{:url('Goods/info',array('id'=>$vo['goods_id'],'type'=>1))}','商品报价')">报价</a>
+						<a href="{:url('Goods/shangjia',array('id'=>$vo['goods_id']))}">上架</a>
+						<a href="{:url('Goods/xiajia',array('id'=>$vo['goods_id']))}">下架</a>
+                      	<a href="{:url('Goods/findSpSfbj',array('id'=>$vo['goods_id']))}">查看报价情况</a>
+                    </td>
+                </tr>
+            </foreach>
+            <tfoot>
+            <tr>
+                <th width="70">ID</th>
+                <!-- <th>型号编号</th> -->
+                <th>型号名称</th>
+                <!-- <th>品目编号</th> -->
+                <th>品目名称</th>
+                <!-- <th>品牌编号</th> -->
+                <th>品牌名称</th>
+                <!-- <th>类别编号</th> -->
+                <th>类别名称</th>
+				<th>报价价格</th>
+                <th>配件信息</th>
+                <th>增值服务</th>
+                <th width="80">上架状态</th>
+                <!-- <th width="80">是否报价</th> -->
+                <th>操作</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+
+    $(function () {
+        $('select[name="category"]').change(function(){
+            val=$(this).val();
+            if(val==0){
+                $('input[name="keyword"]').attr('placeholder','请输入型号/品牌/类别');
+            }else if(val==1){
+                $('input[name="keyword"]').attr('placeholder','请输入型号');
+            }else if(val==2){
+                $('input[name="keyword"]').attr('placeholder','请输入品牌');
+            }else if(val==3){
+                $('input[name="keyword"]').attr('placeholder','请输入类别');
+            }
+        })
+    });
+</script>
+</body>
+</html>

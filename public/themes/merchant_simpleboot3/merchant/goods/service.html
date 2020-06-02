@@ -1,0 +1,84 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="70">ID</th>
+                <!-- <th>型号编号</th> -->
+                <!-- <th>型号名称</th> -->
+                <th>品目编号</th>
+                <th>品目名称</th>
+                <!-- <th>品牌编号</th> -->
+                <th>服务编号</th>
+                <!-- <th>类别编号</th> -->
+                <th>服务内容</th>
+                <th>服务详情</th>
+                <th>状态</th>
+                <th width="80">上架状态</th> 
+                <th width="80">是否报价</th>
+                
+                    <th>报价</th>
+               
+                <!-- <th width="150">操作</th> -->
+            </tr>
+            </thead>
+            <foreach name="service" item="vo">
+                <tr>
+                    <td><b>{$vo.id}</b></td>
+                    <td>
+                        {$vo.pmbh}
+                    </td>
+                    <td>{$vo.pmmc}</td>
+                    <td>
+                        {$vo.fwbh}
+                    </td>
+                    <td>
+                        {$vo.fwmc}
+                    </td>
+                    <td>
+                        {$vo.fwmx}
+                    </td>
+                    <td>
+                        {$vo.zt==1?'启用':'禁用'}
+                    </td>
+                     <td>
+					  <eq name="vo.shangjia_zt" value="2">
+					  下架
+					  <else/>
+					  上架
+					  </eq>
+                    </td>
+                    <td>
+                        {$vo.quote_status?'是':'否'}
+                    </td>
+                   
+                        <td>
+                            <a href="javascript:openIframeDialog('{:url('Goods/service_info',array('id'=>$vo['id'],'type'=>1))}','报价')">报价</a>
+							<if condition ="$vo.quote_status eq 1">
+								<a href="javascript:openIframeDialog('{:url('Goods/service_offer',array('id'=>$vo['id']))}','报价记录')">报价记录</a>
+							</if>
+							  <a href="{:url('Goods/zzfwshangjia',array('id'=>$vo['id']))}">上架</a>
+							<a href="{:url('Goods/zzfwxiajia',array('id'=>$vo['id']))}">下架</a> 
+                        </td>
+                   
+                </tr>
+            </foreach>
+        </table>
+        <div class="table-actions">
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+
+</script>
+</body>
+</html>

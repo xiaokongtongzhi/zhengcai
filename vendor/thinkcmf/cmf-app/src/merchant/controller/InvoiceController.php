@@ -30,9 +30,9 @@ class InvoiceController extends MerchantBaseController
                 $where[]=['lbmc','like','%'.$keyword.'%'];
             }
         }*/
+        $merchant_id = cmf_get_current_merchant_id();
         $orderModel=db('order');
-    	$list=$orderModel->where("state=1")->order('id DESC')->paginate(100,false,['query'=>$param]);
-
+    	$list=$orderModel->where("state=1")->where('merchant_id',$merchant_id)->order('id DESC')->paginate(100,false,['query'=>$param]);
         // var_dump($goodsModel->getLastSql());
 		$page=$list->render();
        // $this->assign('keyword', $keyword ? $keyword : '');

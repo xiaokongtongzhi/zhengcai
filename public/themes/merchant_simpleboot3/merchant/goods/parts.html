@@ -1,0 +1,100 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="70">ID</th>
+                <!-- <th>型号编号</th> -->
+                <!-- <th>型号名称</th> -->
+                <!-- <th>品目编号</th> -->
+                <th>品目名称</th>
+                <!-- <th>品牌编号</th> -->
+                <!-- <th>配件编号</th> -->
+                <!-- <th>类别编号</th> -->
+                
+                <th>配件名称</th>
+                <th>配件描述</th>
+                <!-- <th>配件明细</th> -->
+                <th width="80">上架状态</th> 
+                <th width="80">是否报价</th>
+                <!--<notempty name='type'>-->
+                    <th>报价</th>
+                   <!-- <else />
+                    <th>配件明细</th>
+                </notempty>-->
+               <th width="150">操作</th>
+            </tr>
+            </thead>
+            <foreach name="parts" item="vo">
+                <tr>
+                    <td><b>{$vo.id}</b></td>
+                    <!--<td>{$vo.pmbh}</td>-->
+                    <td>{$vo.pmmc}</td>
+                    <!--<td>{$vo.PJBH}</td>-->
+                    <td>{$vo.PJMC}</td>
+                    <td>
+                        {$vo.PJMS}
+                    </td>
+                    <td>
+					  <eq name="vo.zt" value="2">
+					  下架
+					  <else/>
+					  上架
+					  </eq>
+                    </td>
+                    <td>
+                        {$vo.quote_status?'是':'否'}
+                    </td>
+					 <td>
+                            <a href="javascript:openIframeDialog('{:url('Goods/parts_info',array('id'=>$vo['id'],'type'=>1))}','报价')">报价</a>
+							<if condition ="$vo.quote_status eq 1">
+								<a href="javascript:openIframeDialog('{:url('Goods/parts_offer',array('id'=>$vo['id']))}','报价记录')">报价记录</a>
+							</if>
+							 <a href="{:url('Goods/peijianshangjia',array('id'=>$vo['id']))}">上架</a>
+							<a href="{:url('Goods/peijianxiajia',array('id'=>$vo['id']))}">下架</a> 
+                        </td>
+                     <!--<notempty name='type'>-->
+                       
+                      <!--  <else />
+                        <td>
+                            <a href="javascript:openIframeDialog('{:url('Goods/parts_info',array('id'=>$vo['id']))}','配件明细')">查看</a>
+							<if condition ="$vo.quote_status eq 1">
+								<a href="javascript:openIframeDialog('{:url('Goods/parts_offer',array('id'=>$vo['id']))}','报价记录')">报价记录</a>
+							</if>
+                        </td>
+                    </notempty>-->
+                </tr>
+            </foreach>
+        </table>
+        <div class="table-actions">
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    function reloadPage(win) {
+        win.location.reload();
+    }
+
+    $(function () {
+        $('select[name="category"]').change(function(){
+            val=$(this).val();
+            if(val==0){
+                $('input[name="keyword"]').attr('placeholder','请输入型号/品牌/类别');
+            }else if(val==1){
+                $('input[name="keyword"]').attr('placeholder','请输入型号');
+            }else if(val==2){
+                $('input[name="keyword"]').attr('placeholder','请输入品牌');
+            }else if(val==3){
+                $('input[name="keyword"]').attr('placeholder','请输入类别');
+            }
+        })
+    });
+</script>
+</body>
+</html>

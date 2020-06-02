@@ -23,6 +23,8 @@ class MerchantBaseController extends BaseController
         $sessionMerchantId = session('MERCHANT_ID');
         if (!empty($sessionMerchantId)) {
             $merchant = Db::name('merchant')->where('id', $sessionMerchantId)->find();
+            $this->zsnameconfig=$merchant['zsnameconfig'];
+            $this->zspwdconfig=$merchant['zspwdconfig'];
             if (!$this->checkAccess($sessionMerchantId)) {
                 $this->error("您没有访问权限！");
             }
